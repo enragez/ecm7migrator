@@ -19,9 +19,9 @@ namespace ECM7.Migrator.Providers.SQLite
 	public class SQLiteTransformationProvider : TransformationProvider
 	{
 		/// <summary>
-		/// Инициализация
+		/// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ
 		/// </summary>
-		/// <param name="connection">Подключение к БД</param>
+		/// <param name="connection">РџРѕРґРєР»СЋС‡РµРЅРёРµ Рє Р‘Р”</param>
 		public SQLiteTransformationProvider(SQLiteConnection connection)
 			: base(connection)
 		{
@@ -52,7 +52,7 @@ namespace ECM7.Migrator.Providers.SQLite
 			propertyMap.RegisterPropertySql(ColumnProperty.Identity, "AUTOINCREMENT");
 		}
 
-		#region Особенности СУБД
+		#region РћСЃРѕР±РµРЅРЅРѕСЃС‚Рё РЎРЈР‘Р”
 
 		public override bool NeedsNotNullForIdentity
 		{
@@ -109,42 +109,42 @@ namespace ECM7.Migrator.Providers.SQLite
 			ForeignKeyConstraint onDeleteConstraint = ForeignKeyConstraint.NoAction,
 			ForeignKeyConstraint onUpdateConstraint = ForeignKeyConstraint.NoAction)
 		{
-			throw new NotSupportedException("SQLite не поддерживает внешние ключи");
+			throw new NotSupportedException("SQLite РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚ РІРЅРµС€РЅРёРµ РєР»СЋС‡Рё");
 		}
 
 		public override void AddCheckConstraint(string name, SchemaQualifiedObjectName table, string checkSql)
 		{
-			throw new NotSupportedException("SQLite не поддерживает создание CHECK CONSTRAINTS после создания колонки");
+			throw new NotSupportedException("SQLite РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚ СЃРѕР·РґР°РЅРёРµ CHECK CONSTRAINTS РїРѕСЃР»Рµ СЃРѕР·РґР°РЅРёСЏ РєРѕР»РѕРЅРєРё");
 		}
 
 		public override void AddPrimaryKey(string name, SchemaQualifiedObjectName table, params string[] columns)
 		{
-			throw new NotSupportedException("SLQite не поддерживает добавление ограничений после создания колонки");
+			throw new NotSupportedException("SLQite РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚ РґРѕР±Р°РІР»РµРЅРёРµ РѕРіСЂР°РЅРёС‡РµРЅРёР№ РїРѕСЃР»Рµ СЃРѕР·РґР°РЅРёСЏ РєРѕР»РѕРЅРєРё");
 		}
 
 		public override void AddUniqueConstraint(string name, SchemaQualifiedObjectName table, params string[] columns)
 		{
-			throw new NotSupportedException("SLQite не поддерживает добавление ограничений после создания колонки");
+			throw new NotSupportedException("SLQite РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚ РґРѕР±Р°РІР»РµРЅРёРµ РѕРіСЂР°РЅРёС‡РµРЅРёР№ РїРѕСЃР»Рµ СЃРѕР·РґР°РЅРёСЏ РєРѕР»РѕРЅРєРё");
 		}
 
 		public override void RemoveColumn(SchemaQualifiedObjectName table, string column)
 		{
-			throw new NotSupportedException("SQLite не поддерживает удаление колонок");
+			throw new NotSupportedException("SQLite РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚ СѓРґР°Р»РµРЅРёРµ РєРѕР»РѕРЅРѕРє");
 		}
 
 		public override void RenameColumn(SchemaQualifiedObjectName tableName, string oldColumnName, string newColumnName)
 		{
-			throw new NotSupportedException("SLQite не поддерживает переименование колонок");
+			throw new NotSupportedException("SLQite РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚ РїРµСЂРµРёРјРµРЅРѕРІР°РЅРёРµ РєРѕР»РѕРЅРѕРє");
 		}
 
 		public override void ChangeColumn(SchemaQualifiedObjectName table, string column, ColumnType columnType, bool notNull)
 		{
-			throw new NotSupportedException("SLQite не поддерживает изменение колонок");
+			throw new NotSupportedException("SLQite РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚ РёР·РјРµРЅРµРЅРёРµ РєРѕР»РѕРЅРѕРє");
 		}
 
 		public override void ChangeDefaultValue(SchemaQualifiedObjectName table, string column, object newDefaultValue)
 		{
-			throw new NotSupportedException("SLQite не поддерживает изменение колонок");
+			throw new NotSupportedException("SLQite РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚ РёР·РјРµРЅРµРЅРёРµ РєРѕР»РѕРЅРѕРє");
 		}
 
 		/// <summary>
@@ -196,7 +196,7 @@ namespace ECM7.Migrator.Providers.SQLite
 		/// <returns>The names of all the tables.</returns>
 		public override SchemaQualifiedObjectName[] GetTables(string schema = null)
 		{
-			Require.That(string.IsNullOrWhiteSpace(schema), "SQLite не поддерживает схемы");
+			Require.That(string.IsNullOrWhiteSpace(schema), "SQLite РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚ СЃС…РµРјС‹");
 
 			var tables = new List<SchemaQualifiedObjectName>();
 

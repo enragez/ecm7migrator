@@ -20,7 +20,7 @@ namespace ECM7.Migrator
 	public class Migrator : IDisposable
 	{
 		/// <summary>
-		/// Провайдер
+		/// РџСЂРѕРІР°Р№РґРµСЂ
 		/// </summary>
 		private readonly ITransformationProvider provider;
 
@@ -30,12 +30,12 @@ namespace ECM7.Migrator
 		}
 
 		/// <summary>
-		/// Загрузчик информации о миграциях
+		/// Р—Р°РіСЂСѓР·С‡РёРє РёРЅС„РѕСЂРјР°С†РёРё Рѕ РјРёРіСЂР°С†РёСЏС…
 		/// </summary>
 		private readonly MigrationAssembly migrationAssembly;
 
 		/// <summary>
-		/// Ключ для фильтрации миграций
+		/// РљР»СЋС‡ РґР»СЏ С„РёР»СЊС‚СЂР°С†РёРё РјРёРіСЂР°С†РёР№
 		/// </summary>
 		private string Key
 		{
@@ -45,7 +45,7 @@ namespace ECM7.Migrator
 		#region constructors
 
 		/// <summary>
-		/// Инициализация
+		/// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ
 		/// </summary>
 		public Migrator(string providerTypeName, IDbConnection connection, Assembly asm)
 			: this(ProviderFactory.Create(providerTypeName, connection), asm)
@@ -53,7 +53,7 @@ namespace ECM7.Migrator
 		}
 
 		/// <summary>
-		/// Инициализация
+		/// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ
 		/// </summary>
 		public Migrator(string providerTypeName, string connectionString, Assembly asm)
 			: this(ProviderFactory.Create(providerTypeName, connectionString), asm)
@@ -61,14 +61,14 @@ namespace ECM7.Migrator
 		}
 
 		/// <summary>
-		/// Инициализация
+		/// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ
 		/// </summary>
 		public Migrator(ITransformationProvider provider, Assembly asm)
 		{
-			Require.IsNotNull(provider, "Не задан провайдер трансформации");
+			Require.IsNotNull(provider, "РќРµ Р·Р°РґР°РЅ РїСЂРѕРІР°Р№РґРµСЂ С‚СЂР°РЅСЃС„РѕСЂРјР°С†РёРё");
 			this.provider = provider;
 
-			Require.IsNotNull(asm, "Не задана сборка с миграциями");
+			Require.IsNotNull(asm, "РќРµ Р·Р°РґР°РЅР° СЃР±РѕСЂРєР° СЃ РјРёРіСЂР°С†РёСЏРјРё");
 			migrationAssembly = new MigrationAssembly(asm);
 		}
 
@@ -124,10 +124,10 @@ namespace ECM7.Migrator
 		}
 
 		/// <summary>
-		/// Выполнение миграции
+		/// Р’С‹РїРѕР»РЅРµРЅРёРµ РјРёРіСЂР°С†РёРё
 		/// </summary>
-		/// <param name="targetVersion">Версия выполняемой миграции</param>
-		/// <param name="currentDatabaseVersion">Текущая версия БД</param>
+		/// <param name="targetVersion">Р’РµСЂСЃРёСЏ РІС‹РїРѕР»РЅСЏРµРјРѕР№ РјРёРіСЂР°С†РёРё</param>
+		/// <param name="currentDatabaseVersion">РўРµРєСѓС‰Р°СЏ РІРµСЂСЃРёСЏ Р‘Р”</param>
 		public void ExecuteMigration(long targetVersion, long currentDatabaseVersion)
 		{
 			var migrationInfo = migrationAssembly.GetMigrationInfo(targetVersion);
@@ -165,7 +165,7 @@ namespace ECM7.Migrator
 
 				if (!migrationInfo.WithoutTransaction)
 				{
-					// при ошибке откатываем изменения
+					// РїСЂРё РѕС€РёР±РєРµ РѕС‚РєР°С‚С‹РІР°РµРј РёР·РјРµРЅРµРЅРёСЏ
 					provider.Rollback();
 					MigratorLogManager.Log.RollingBack(currentDatabaseVersion);
 				}
@@ -175,22 +175,22 @@ namespace ECM7.Migrator
 		}
 
 		/// <summary>
-		/// Получить список версий для выполнения
+		/// РџРѕР»СѓС‡РёС‚СЊ СЃРїРёСЃРѕРє РІРµСЂСЃРёР№ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ
 		/// </summary>
-		/// <param name="target">Версия назначения</param>
-		/// <param name="appliedMigrations">Список версий выполненных миграций</param>
-		/// <param name="availableMigrations">Список версий доступных миграций</param>
+		/// <param name="target">Р’РµСЂСЃРёСЏ РЅР°Р·РЅР°С‡РµРЅРёСЏ</param>
+		/// <param name="appliedMigrations">РЎРїРёСЃРѕРє РІРµСЂСЃРёР№ РІС‹РїРѕР»РЅРµРЅРЅС‹С… РјРёРіСЂР°С†РёР№</param>
+		/// <param name="availableMigrations">РЎРїРёСЃРѕРє РІРµСЂСЃРёР№ РґРѕСЃС‚СѓРїРЅС‹С… РјРёРіСЂР°С†РёР№</param>
 		public static MigrationPlan BuildMigrationPlan(long target, IList<long> appliedMigrations, IList<long> availableMigrations)
 		{
 			long startVersion = appliedMigrations.IsEmpty() ? 0 : appliedMigrations.Max();
 			var set = new HashSet<long>(appliedMigrations);
 
-			// проверки
+			// РїСЂРѕРІРµСЂРєРё
 			var list = availableMigrations.Where(x => x < startVersion && !set.Contains(x)).ToList();
 			if (!list.IsEmpty())
 			{
 				throw new VersionException(
-					"Доступны невыполненные миграции, версия которых меньше текущей версии БД", list.ToArray());
+					"Р”РѕСЃС‚СѓРїРЅС‹ РЅРµРІС‹РїРѕР»РЅРµРЅРЅС‹Рµ РјРёРіСЂР°С†РёРё, РІРµСЂСЃРёСЏ РєРѕС‚РѕСЂС‹С… РјРµРЅСЊС€Рµ С‚РµРєСѓС‰РµР№ РІРµСЂСЃРёРё Р‘Р”", list.ToArray());
 			}
 
 			set.UnionWith(availableMigrations);

@@ -191,21 +191,21 @@ namespace ECM7.Migrator.Providers.Tests
 			string cstring = ConfigurationManager.AppSettings["NpgsqlConnectionString"];
 			using (var provider = ProviderFactory.Create(typeof(PostgreSQLTransformationProvider), cstring))
 			{
-				// проверка типа провайдера
+				// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 				Assert.IsNotNull(provider);
 				Assert.AreEqual(typeof(PostgreSQLTransformationProvider), provider.GetType());
 
-				// проверка типа подключения
+				// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 				Assert.IsNotNull(provider.Connection);
 				Assert.AreEqual(typeof(NpgsqlConnection), provider.Connection.GetType());
 
-				// проверка строки подключнеия у созданного провайдера
+				// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 				var sb1 = new NpgsqlConnectionStringBuilder(cstring);
 				var sb2 = new NpgsqlConnectionStringBuilder(provider.Connection.ConnectionString);
 
 				Assert.AreEqual(sb1.Host, sb2.Host);
 				Assert.AreEqual(sb1.Database, sb2.Database);
-				Assert.AreEqual(sb1.UserName, sb2.UserName);
+				Assert.AreEqual(sb1.Username, sb2.Username);
 			}
 		}
 

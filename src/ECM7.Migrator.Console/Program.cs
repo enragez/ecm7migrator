@@ -15,9 +15,9 @@ namespace ECM7.Migrator.Console
 	public class Program
 	{
 		/// <summary>
-		/// Выполнение программы
+		/// Р’С‹РїРѕР»РЅРµРЅРёРµ РїСЂРѕРіСЂР°РјРјС‹
 		/// </summary>
-		/// <param name="args">Аргументы командной строки</param>
+		/// <param name="args">РђСЂРіСѓРјРµРЅС‚С‹ РєРѕРјР°РЅРґРЅРѕР№ СЃС‚СЂРѕРєРё</param>
 		[STAThread]
 		public static int Main(string[] args)
 		{
@@ -86,7 +86,7 @@ namespace ECM7.Migrator.Console
 		}
 
 		/// <summary>
-		/// Выводит текущий список миграций
+		/// Р’С‹РІРѕРґРёС‚ С‚РµРєСѓС‰РёР№ СЃРїРёСЃРѕРє РјРёРіСЂР°С†РёР№
 		/// </summary>
 		public static void List(CommandLineParams parameters)
 		{

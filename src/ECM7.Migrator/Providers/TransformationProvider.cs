@@ -17,7 +17,7 @@ namespace ECM7.Migrator.Providers
 	/// </summary>
 	public abstract class TransformationProvider : SqlRunner, ITransformationProvider
 	{
-		// todo: проверить схемы в получении списка таблиц + проверке существования таблицы/колонки/индекса/ограничения
+		// todo: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ + пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		private const string SCHEMA_INFO_TABLE = "SchemaInfo";
 
 		protected readonly IFormatProvider sqlFormatProvider;
@@ -65,7 +65,7 @@ namespace ECM7.Migrator.Providers
 
 		#endregion
 
-		#region Особенности СУБД
+		#region пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 
 		public virtual bool IdentityNeedsType
 		{
@@ -108,13 +108,13 @@ namespace ECM7.Migrator.Providers
 			sqlBuilder.AppendColumnName();
 			sqlBuilder.AppendColumnType(IdentityNeedsType);
 
-			// identity не нуждается в типе
+			// identity пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
 			sqlBuilder.AppendSqlForIdentityWhichNotNeedsType(IdentityNeedsType);
 			sqlBuilder.AppendUnsignedSql();
 			sqlBuilder.AppendNotNullSql(NeedsNotNullForIdentity);
 			sqlBuilder.AppendPrimaryKeySql(compoundPrimaryKey);
 
-			// identity нуждается в типе
+			// identity пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
 			sqlBuilder.AppendSqlForIdentityWhichNeedsType(IdentityNeedsType);
 			sqlBuilder.AppendUniqueSql();
 			sqlBuilder.AppendDefaultValueSql(GetSqlDefaultValue);
@@ -146,9 +146,9 @@ namespace ECM7.Migrator.Providers
 
 		protected virtual string GetSqlChangeNotNullConstraint(SchemaQualifiedObjectName table, string column, bool notNull, ref string sqlChangeColumnType)
 		{
-			// если изменение типа колонки и признака NOT NULL происходит одним запросом,
-			// то изменяем параметр sqlChangeColumnType и возвращаем NULL
-			// иначе возвращаем запрос, меняющий признак NOT NULL
+			// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ NOT NULL пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ,
+			// пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ sqlChangeColumnType пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ NULL
+			// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ NOT NULL
 
 			sqlChangeColumnType += notNull ? " NOT NULL" : " NULL";
 
@@ -234,7 +234,7 @@ namespace ECM7.Migrator.Providers
 
 		public virtual void AddTable(SchemaQualifiedObjectName name, params Column[] columns)
 		{
-			// список колонок, входящих в первичный ключ
+			// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 			List<string> pks = columns
 				.Where(column => column.IsPrimaryKey)
 				.Select(column => column.Name)
@@ -244,7 +244,7 @@ namespace ECM7.Migrator.Providers
 
 			var querySections = new List<string>();
 
-			// SQL для колонок таблицы
+			// SQL пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			foreach (Column column in columns)
 			{
 				// Remove the primary key notation if compound primary key because we'll add it back later
@@ -257,7 +257,7 @@ namespace ECM7.Migrator.Providers
 				querySections.Add(columnSql);
 			}
 
-			// SQL для составного первичного ключа
+			// SQL пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 			if (compoundPrimaryKey)
 			{
 				string pkName = "PK_" + name.Name;
@@ -512,7 +512,7 @@ namespace ECM7.Migrator.Providers
 		/// </summary>
 		public List<long> GetAppliedMigrations(string key = "")
 		{
-			Require.IsNotNull(key, "Не указан ключ миграциий");
+			Require.IsNotNull(key, "пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
 			var appliedMigrations = new List<long>();
 
 			CreateSchemaInfoTable();
@@ -520,7 +520,7 @@ namespace ECM7.Migrator.Providers
 			string sql = FormatSql("SELECT {0:NAME} FROM {1:NAME} WHERE {2:NAME} = '{3}'",
 				"Version", SCHEMA_INFO_TABLE, "AssemblyKey", key.Replace("'", "''"));
 
-			// todo: написать тест, который выполняет миграцию, а потом проверяет, что она сохранилась в БД
+			// todo: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ
 			using (IDataReader reader = ExecuteReader(sql))
 			{
 				while (reader.Read())
@@ -560,7 +560,7 @@ namespace ECM7.Migrator.Providers
 			Delete(SCHEMA_INFO_TABLE, whereSql);
 		}
 
-		protected void CreateSchemaInfoTable()
+		protected virtual void CreateSchemaInfoTable()
 		{
 			EnsureHasConnection();
 
@@ -575,7 +575,7 @@ namespace ECM7.Migrator.Providers
 			{
 				if (!ColumnExists(SCHEMA_INFO_TABLE, "AssemblyKey"))
 				{
-					// TODO: Удалить код совместимости для старой таблицы SchemaInfo в следующих версиях
+					// TODO: пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ SchemaInfo пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 					if (ColumnExists(SCHEMA_INFO_TABLE, "Key"))
 					{
