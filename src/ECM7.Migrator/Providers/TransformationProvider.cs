@@ -518,7 +518,7 @@ namespace ECM7.Migrator.Providers
 			CreateSchemaInfoTable();
 
 			string sql = FormatSql("SELECT {0:NAME} FROM {1:NAME} WHERE {2:NAME} = '{3}'",
-				"Version", SCHEMA_INFO_TABLE, "AssemblyKey", key.Replace("'", "''"));
+				"Version", SCHEMA_INFO_TABLE, "Key", key.Replace("'", "''"));
 
 			// todo: �������� ����, ������� ��������� ��������, � ����� ���������, ��� ��� ����������� � ��
 			using (IDataReader reader = ExecuteReader(sql))
@@ -542,7 +542,7 @@ namespace ECM7.Migrator.Providers
 		public void MigrationApplied(long version, string key)
 		{
 			CreateSchemaInfoTable();
-			Insert(SCHEMA_INFO_TABLE, new[] { "Version", "AssemblyKey" }, new[] { version.ToString(), key });
+			Insert(SCHEMA_INFO_TABLE, new[] { "Version", "Key" }, new[] { version.ToString(), key });
 		}
 
 		/// <summary>
@@ -555,7 +555,7 @@ namespace ECM7.Migrator.Providers
 			CreateSchemaInfoTable();
 
 			string whereSql = FormatSql("{0:NAME} = {1} AND {2:NAME} = '{3}'",
-				"Version", version, "AssemblyKey", key);
+				"Version", version, "Key", key);
 
 			Delete(SCHEMA_INFO_TABLE, whereSql);
 		}
@@ -569,23 +569,7 @@ namespace ECM7.Migrator.Providers
 				AddTable(
 					SCHEMA_INFO_TABLE,
 					new Column("Version", DbType.Int64, ColumnProperty.PrimaryKey),
-					new Column("AssemblyKey", DbType.String.WithSize(200), ColumnProperty.PrimaryKey, "''"));
-			}
-			else
-			{
-				if (!ColumnExists(SCHEMA_INFO_TABLE, "AssemblyKey"))
-				{
-					// TODO: ������� ��� ������������� ��� ������ ������� SchemaInfo � ��������� �������
-
-					if (ColumnExists(SCHEMA_INFO_TABLE, "Key"))
-					{
-						UpdateSchemaInfo.Update2To3(this);
-					}
-					else
-					{
-						UpdateSchemaInfo.Update1To3(this);
-					}
-				}
+					new Column("Key", DbType.String.WithSize(200), ColumnProperty.PrimaryKey, "''"));
 			}
 		}
 
